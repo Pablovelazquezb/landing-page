@@ -68,7 +68,7 @@ export function useGithubProjects(username: string) {
                         name: 'zoo',
                         description: 'A zoo management system with database schemas and analytics for employees, shops, and animals.',
                         html_url: 'https://github.com/Pablovelazquezb/zoo',
-                        homepage: 'https://zoo-five-sigma.vercel.app/login',
+                        homepage: 'https://zoo-five-sigma.vercel.app',
                         stargazers_count: 0,
                         language: 'TypeScript',
                         topics: ['database', 'management'],

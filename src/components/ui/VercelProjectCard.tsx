@@ -47,7 +47,7 @@ export const VercelProjectCard = ({ project, index }: VercelProjectCardProps) =>
             <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8 lg:gap-12">
                 {/* Left side: Web Preview Frame */}
                 {project.homepage ? (
-                    <div className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-black border border-[#333] rounded-lg overflow-hidden relative group flex items-center justify-center">
+                    <a href={project.homepage} target="_blank" rel="noopener noreferrer" className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-black border border-[#333] rounded-lg overflow-hidden relative group flex items-center justify-center cursor-pointer">
                         <div className="absolute inset-0 bg-[#000] opacity-0 group-hover:opacity-10 transition-opacity z-10 pointer-events-none" />
                         <img
                             src={`https://api.microlink.io/?url=${encodeURIComponent(project.homepage)}&screenshot=true&embed=screenshot.url`}
@@ -64,7 +64,7 @@ export const VercelProjectCard = ({ project, index }: VercelProjectCardProps) =>
                             <Github className="w-12 h-12 mb-4 text-[#444]" />
                             <p className="text-sm">Preview unavailable</p>
                         </div>
-                    </div>
+                    </a>
                 ) : (
                     <div className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-[#111] border border-[#333] rounded-lg flex flex-col items-center justify-center text-[#888]">
                         <Github className="w-12 h-12 mb-4 text-[#444]" />
