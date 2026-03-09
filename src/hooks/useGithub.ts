@@ -25,13 +25,67 @@ export function useGithubProjects(username: string) {
                 if (!res.ok) throw new Error('Failed to fetch projects');
                 const data: Repository[] = await res.json();
 
-                // Filter out forks and profile README, sort by stars or updated
-                const filtered = data
-                    .filter(repo => !repo.fork && repo.name !== username)
-                    .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime())
-                    .slice(0, 6); // Grab the top 6
+                // Define the manually injected projects
+                const customProjects: Repository[] = [
+                    {
+                        id: 10001,
+                        name: 'corlynx-site',
+                        description: 'A modern landing page designed for Corlynx to showcase their web development services.',
+                        html_url: 'https://vercel.com/pablovelazquezbs-projects/corlynx-site',
+                        homepage: 'https://vercel.com/pablovelazquezbs-projects/corlynx-site',
+                        stargazers_count: 0,
+                        language: 'TypeScript',
+                        topics: ['react', 'nextjs', 'tailwind'],
+                        fork: false,
+                        pushed_at: new Date().toISOString()
+                    },
+                    {
+                        id: 10002,
+                        name: 'inventory-management-software',
+                        description: 'A comprehensive inventory management system for tracking internal business stock and logistics.',
+                        html_url: 'https://vercel.com/pablovelazquezbs-projects/inventory-management-software',
+                        homepage: 'https://vercel.com/pablovelazquezbs-projects/inventory-management-software',
+                        stargazers_count: 0,
+                        language: 'TypeScript',
+                        topics: ['react', 'inventory', 'management'],
+                        fork: false,
+                        pushed_at: new Date().toISOString()
+                    },
+                    {
+                        id: 10003,
+                        name: 'corlynx-bot-platform',
+                        description: 'An AI-powered bot platform to automate customer interactions and streamline communications.',
+                        html_url: 'https://vercel.com/pablovelazquezbs-projects/corlynx-bot-platform',
+                        homepage: 'https://vercel.com/pablovelazquezbs-projects/corlynx-bot-platform',
+                        stargazers_count: 0,
+                        language: 'TypeScript',
+                        topics: ['ai', 'bot', 'platform'],
+                        fork: false,
+                        pushed_at: new Date().toISOString()
+                    },
+                    {
+                        id: 10004,
+                        name: 'zoo',
+                        description: 'A zoo management system with database schemas and analytics for employees, shops, and animals.',
+                        html_url: 'https://vercel.com/pablovelazquezbs-projects/zoo',
+                        homepage: 'https://vercel.com/pablovelazquezbs-projects/zoo',
+                        stargazers_count: 0,
+                        language: 'TypeScript',
+                        topics: ['database', 'management'],
+                        fork: false,
+                        pushed_at: new Date().toISOString()
+                    }
+                ];
 
-                setProjects(filtered);
+                const customProjectNames = customProjects.map(p => p.name);
+
+                // Filter out forks, profile README, and repos that overlap with our custom ones
+                const filtered = data
+                    .filter(repo => !repo.fork && repo.name !== username && !customProjectNames.includes(repo.name))
+                    .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime())
+                    .slice(0, 2); // Grab 2 actual repos so we have 6 total
+
+                setProjects([...customProjects, ...filtered]);
             } catch (err: any) {
                 setError(err);
             } finally {
