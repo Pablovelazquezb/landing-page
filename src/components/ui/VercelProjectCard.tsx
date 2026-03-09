@@ -47,14 +47,23 @@ export const VercelProjectCard = ({ project, index }: VercelProjectCardProps) =>
             <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8 lg:gap-12">
                 {/* Left side: Web Preview Frame */}
                 {project.homepage ? (
-                    <div className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-black border border-[#333] rounded-lg overflow-hidden relative group">
+                    <div className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-black border border-[#333] rounded-lg overflow-hidden relative group flex items-center justify-center">
                         <div className="absolute inset-0 bg-[#000] opacity-0 group-hover:opacity-10 transition-opacity z-10 pointer-events-none" />
-                        <iframe
-                            src={project.homepage}
-                            title={`${project.name} preview`}
-                            className="w-[200%] h-[200%] border-0 origin-top-left scale-[0.5]"
-                            style={{ pointerEvents: 'none' }} // disable interaction inside iframe for clean visual
+                        <img
+                            src={`https://api.microlink.io/?url=${encodeURIComponent(project.homepage)}&screenshot=true&embed=screenshot.url`}
+                            alt={`${project.name} preview`}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                                // Fallback if screenshot service fails
+                                (e.target as HTMLImageElement).style.display = 'none';
+                                (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                                (e.target as HTMLImageElement).nextElementSibling?.classList.add('flex');
+                            }}
                         />
+                        <div className="hidden absolute inset-0 flex-col items-center justify-center text-[#888] bg-[#111]">
+                            <Github className="w-12 h-12 mb-4 text-[#444]" />
+                            <p className="text-sm">Preview unavailable</p>
+                        </div>
                     </div>
                 ) : (
                     <div className="w-full lg:w-[60%] lg:max-w-xl aspect-[16/10] bg-[#111] border border-[#333] rounded-lg flex flex-col items-center justify-center text-[#888]">
@@ -69,30 +78,28 @@ export const VercelProjectCard = ({ project, index }: VercelProjectCardProps) =>
                     <div>
                         <p className="text-sm text-[#888] mb-1">Deployment</p>
                         <a
-                            href={project.homepage || project.html_url}
+                            href={project.html_url}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm font-medium text-[#EDEDED] hover:underline"
                         >
-                            {project.homepage ? project.homepage.replace('https://', '') : `${project.name} on GitHub`}
+                            {project.html_url.replace('https://', '')}
                         </a>
                     </div>
 
                     {/* Domains */}
-                    {project.homepage && (
-                        <div>
-                            <p className="text-sm text-[#888] mb-1">Domains</p>
-                            <a
-                                href={project.homepage}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm font-medium text-[#EDEDED] flex items-center hover:underline"
-                            >
-                                {project.homepage.replace('https://', '')}
-                                <svg className="ml-1 w-3 h-3 text-[#A1A1AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                            </a>
-                        </div>
-                    )}
+                    <div>
+                        <p className="text-sm text-[#888] mb-1">Domains</p>
+                        <a
+                            href={project.html_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-[#EDEDED] flex items-center hover:underline"
+                        >
+                            {project.html_url.replace('https://', '')}
+                            <svg className="ml-1 w-3 h-3 text-[#A1A1AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
+                    </div>
 
                     {/* Status & Created Date */}
                     <div className="flex items-center justify-between border-t border-[#222] pt-6 mt-2">
