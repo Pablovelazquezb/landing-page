@@ -1,6 +1,7 @@
 import { Header } from './components/ui/Header';
 import { Hero } from './components/sections/Hero';
 import { Projects } from './components/sections/Projects';
+import { Contact } from './components/sections/Contact';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Hero />
 
         <Projects />
+        <Contact />
       </main>
 
       <footer className="py-8 border-t border-[var(--border)] mt-24 text-center text-[var(--text-secondary)] text-sm">
