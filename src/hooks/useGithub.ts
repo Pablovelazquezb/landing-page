@@ -74,6 +74,18 @@ export function useGithubProjects(username: string) {
                         topics: ['database', 'management'],
                         fork: false,
                         pushed_at: new Date().toISOString()
+                    },
+                    {
+                        id: 10005,
+                        name: 'randomized-hill-climbing-algorithm-with-resampling',
+                        description: 'A visualizer application for the Randomized Hill Climbing Algorithm with Resampling.',
+                        html_url: 'https://github.com/Pablovelazquezb/randomized-hill-climbing-algorithm-with-resampling',
+                        homepage: 'https://randomized-hill-climbing-algorithm-with-resampling.vercel.app',
+                        stargazers_count: 0,
+                        language: 'TypeScript',
+                        topics: ['algorithm', 'visualizer'],
+                        fork: false,
+                        pushed_at: new Date().toISOString()
                     }
                 ];
 
@@ -83,7 +95,7 @@ export function useGithubProjects(username: string) {
                 const filtered = data
                     .filter(repo => !repo.fork && repo.name !== username && !customProjectNames.includes(repo.name))
                     .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime())
-                    .slice(0, 2); // Grab 2 actual repos so we have 6 total
+                    .slice(0, 1); // Grab 1 actual repos so we have 6 total
 
                 setProjects([...customProjects, ...filtered]);
             } catch (err: any) {
